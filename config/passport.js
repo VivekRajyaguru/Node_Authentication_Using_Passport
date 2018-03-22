@@ -1,7 +1,14 @@
 
 var localStrategy = require('passport-local').Strategy;
-
+var nodemailer = require('nodemailer');
 var User = require('../app/model/user');
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'vivekrajyaguru1993@gmail.com',
+      pass: 'vivek241993'
+    }
+  });
 
 module.exports = function(passport) {
     passport.serializeUser(function(user, done){
@@ -31,6 +38,20 @@ module.exports = function(passport) {
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
 
+                    var mailOptions = {
+                        from: 'vivekrajyaguru1993@gmail.com',
+                        to: email,
+                        subject: 'Demo Email From Node',
+                        text: 'Yo!'
+                      };
+                      
+                    transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                    });
                     newUser.save(function(err){
                         if (err)
                             throw err;
