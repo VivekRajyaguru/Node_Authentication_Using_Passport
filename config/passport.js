@@ -5,8 +5,8 @@ var User = require('../app/model/user');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'vivekrajyaguru1993@gmail.com',
-      pass: 'vivek241993'
+      user: 'your@gmail.com',
+      pass: 'password'
     }
   });
 
@@ -39,7 +39,7 @@ module.exports = function(passport) {
                     newUser.local.password = newUser.generateHash(password);
 
                     var mailOptions = {
-                        from: 'vivekrajyaguru1993@gmail.com',
+                        from: 'your@gmail.com',
                         to: email,
                         subject: 'Demo Email From Node',
                         text: 'Yo!'
